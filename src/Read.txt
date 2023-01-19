@@ -1,0 +1,5 @@
+Context api : Clean and easy way to share state b/w components.    Share state within a component tree.		
+
+Hooks: Tap into the inner workings   of react in f(x) components
+
+
