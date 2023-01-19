@@ -3,3 +3,20 @@ Context api : Clean and easy way to share state b/w components.    Share state w
 Hooks: Tap into the inner workings   of react in f(x) components
 
 
+Gives us way to share state.
+Open down a component tree.
+Now u can do that with props but it'll get a little non-professional if the projext is big
+
+It is going to give us essential/central place to store data or state and then share it 
+b/w components w/o having to pass it down as props 
+
+Instead of drilling data 
+We can create a new context in a new file somewhere
+BASICALLY US MAKING A PLACE WHERE A SHARED STATE COULD BE INITIALLY DEFINED AND SET UP
+When we create a context we then haver to provide to our component tree
+So that compents in that tree can access it and use it
+
+WE do this  CONTEXT PROVIDER  a react tag and wraps whichever components needs access to it.
+
+WHEN TO USE CONTEXT?
+The data that is considered global for that particular tree of comp
