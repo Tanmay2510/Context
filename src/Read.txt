@@ -20,3 +20,79 @@ WE do this  CONTEXT PROVIDER  a react tag and wraps whichever components needs a
 
 WHEN TO USE CONTEXT?
 The data that is considered global for that particular tree of comp
+
+
+//USE REDUCER 
+
+1-When two or more states change together it's better to use useReducer hook
+2-If you have a complex state like array,obj inside state object 
+
+import { createContext, useReducer } from "react";
+
+//? Why this approach ?
+
+// This approach might overcomplicated and can be done with much less code but....
+// This approach is extremely scalable, maintainable, easy to write tests for, and easy to maintain
+// Any sort of change in data can be tracked from the 'Actions' file
+
+//
+
+export const TableStoreContext = createContext();
+
+// This reducer function is responsible for calling the function passed by the 'tableDispatch' function
+//  that function will return the new state
+// Note: function is not mutating the previous state, it'll return a brand new state with required changes
+
+const initialState = {
+  graphData:{},
+  sortableData: [],
+  tableData:[],
+  selectedFields: [],
+  currentManagerId: 0,
+  currentPage: 1,
+  totalPages: 0,
+  records: 4,
+  stackData:{
+    quarters:[],
+    data:[],
+    togglename:[],
+  },
+  color:{},
+  dataFound: true,
+};
+
+//Reducer f(x) 
+//state : in the begining it's gonna be the initial state
+//Basically it's a f(x) that can update a state and return the new version of the state
+//Sending all the info using the action
+const tableStoreReducer = (state, action) => {
+  try {
+    return action(state);
+  } catch (error) {
+    console.warn(
+error    );
+    return initialState;
+  }
+};
+
+// This is the initial state of the app and also gives an idea of what data will be available throughtout the page
+const TableStore = ({ children }) => {
+  // The reducer hook will contain all the state which can be accessed throught the table page
+
+  //To call the f(x) we'll use the useRed hook.
+  //We'll pass the f(x) i.e tablestorereduce and init state 
+  //And we'll get the current state as well
+  //Also it returns the dispatch f(x)
+  //This Df(x) allows us to send actions to the reducer
+  //basically useRed hook takes the init state and passes into TSR state param
+
+  const [state, tableDispatch] = useReducer(tableStoreReducer, initialState);
+
+  return (
+    <TableStoreContext.Provider value={{ ...state, tableDispatch }}>
+      {children}
+    </TableStoreContext.Provider>
+  );
+};
+
+export default TableStore;
